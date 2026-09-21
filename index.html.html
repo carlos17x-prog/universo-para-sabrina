@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Para Sabrina 🌻</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      width: 100%;
+      min-height: 100%;
+      overflow-x: hidden;
+      font-family: Georgia, "Times New Roman", serif;
+      background: #03020b;
+      color: white;
+    }
+
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 50% 50%, rgba(92, 48, 120, .24), transparent 28%),
+        radial-gradient(circle at 20% 20%, rgba(255, 193, 7, .08), transparent 25%),
+        radial-gradient(circle at 80% 75%, rgba(104, 65, 160, .12), transparent 30%),
+        #03020b;
+    }
+
+    #stars, #petals {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: white;
+      border-radius: 50%;
+      opacity: .65;
+      animation: twinkle 3s infinite ease-in-out;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: .2; transform: scale(.7); }
+      50% { opacity: 1; transform: scale(1.5); }
+    }
+
+    .intro {
+      position: fixed;
+      inset: 0;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 25px;
+      background: rgba(1, 1, 8, .94);
+      transition: opacity .8s ease, visibility .8s ease;
+    }
+
+    .intro.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .intro-box {
+      text-align: center;
+      max-width: 600px;
+      padding: 35px 25px;
+    }
+
+    .intro-flower {
+      font-size: 70px;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .intro h1 {
+      font-size: clamp(32px, 8vw, 64px);
+      margin: 10px 0;
+      color: #ffd83d;
+      text-shadow: 0 0 25px rgba(255, 216, 61, .5);
+    }
+
+    .intro p {
+      color: #ddd;
+      font-size: 18px;
+      line-height: 1.7;
+    }
+
+    button {
+      border: 1px solid rgba(255, 216, 61, .7);
+      background: rgba(255, 193, 7, .12);
+      color: #ffe47a;
+      padding: 13px 25px;
+      border-radius: 30px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: .3s;
+    }
+
+    button:hover {
+      background: rgba(255, 193, 7, .25);
+      transform: scale(1.04);
+    }
+
+    .universe {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 55px 20px;
+    }
+
+    .orbit {
+      position: absolute;
+      width: min(88vw, 900px);
+      height: min(88vw, 900px);
+      max-height: 900px;
+      border: 1px solid rgba(255, 220, 100, .09);
+      border-radius: 50%;
+      box-shadow:
+        0 0 80px rgba(255, 190, 40, .04),
+        inset 0 0 80px rgba(140, 80, 180, .04);
+    }
+
+    .orbit.two {
+      width: min(68vw, 690px);
+      height: min(68vw, 690px);
+      transform: rotate(35deg);
+    }
+
+    .orbit.three {
+      width: min(48vw, 490px);
+      height: min(48vw, 490px);
+      transform: rotate(-25deg);
+    }
+
+    .center {
+      position: relative;
+      z-index: 5;
+      width: min(760px, 92vw);
+      padding: 42px 34px;
+      text-align: center;
+      border: 1px solid rgba(255, 216, 61, .22);
+      border-radius: 30px;
+      background: rgba(10, 6, 20, .78);
+      backdrop-filter: blur(10px);
+      box-shadow:
+        0 0 70px rgba(255, 193, 7, .10),
+        0 0 120px rgba(110, 70, 170, .10);
+    }
+
+    .mini {
+      color: #ffd83d;
+      letter-spacing: 4px;
+      font-size: 13px;
+      text-transform: uppercase;
+    }
+
+    .center h2 {
+      margin: 10px 0 25px;
+      font-size: clamp(30px, 6vw, 52px);
+      color: #ffe27a;
+      text-shadow: 0 0 20px rgba(255, 216, 61, .25);
+    }
+
+    .message {
+      text-align: left;
+      font-size: 17px;
+      line-height: 1.9;
+      color: #eee;
+    }
+
+    .message p { margin: 0 0 17px; }
+
+    .highlight {
+      color: #ffd83d;
+      font-weight: bold;
+    }
+
+    .signature {
+      margin-top: 25px;
+      font-size: 21px;
+      color: #ffe47a;
+      text-align: center;
+    }
+
+    .flowers {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .flower {
+      position: absolute;
+      pointer-events: auto;
+      width: 74px;
+      height: 74px;
+      border: 0;
+      padding: 0;
+      background: transparent;
+      font-size: 45px;
+      filter: drop-shadow(0 0 10px rgba(255, 205, 40, .45));
+      animation: float 4s ease-in-out infinite;
+    }
+
+    .flower:nth-child(odd) { animation-delay: -1.4s; }
+    .flower:nth-child(3n) { animation-delay: -2.5s; }
+
+    .flower:hover {
+      transform: scale(1.22) rotate(7deg);
+      background: transparent;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(-3deg); }
+      50% { transform: translateY(-12px) rotate(4deg); }
+    }
+
+    .f1 { left: 7%; top: 14%; }
+    .f2 { left: 20%; top: 7%; }
+    .f3 { left: 43%; top: 4%; }
+    .f4 { right: 20%; top: 8%; }
+    .f5 { right: 7%; top: 18%; }
+    .f6 { right: 3%; top: 43%; }
+    .f7 { right: 9%; bottom: 16%; }
+    .f8 { right: 25%; bottom: 6%; }
+    .f9 { left: 43%; bottom: 3%; }
+    .f10 { left: 21%; bottom: 7%; }
+    .f11 { left: 7%; bottom: 17%; }
+    .f12 { left: 2%; top: 43%; }
+
+    .hint {
+      position: fixed;
+      z-index: 10;
+      bottom: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 12px;
+      color: rgba(255,255,255,.48);
+      text-align: center;
+      width: 90%;
+    }
+
+    .popup {
+      position: fixed;
+      inset: 0;
+      z-index: 30;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 25px;
+      background: rgba(0,0,0,.75);
+    }
+
+    .popup.show { display: flex; }
+
+    .popup-box {
+      max-width: 420px;
+      width: 100%;
+      padding: 30px;
+      text-align: center;
+      border-radius: 25px;
+      background: #10091a;
+      border: 1px solid rgba(255,216,61,.35);
+      box-shadow: 0 0 60px rgba(255,193,7,.15);
+    }
+
+    .popup-flower { font-size: 55px; }
+    .popup-text { font-size: 23px; line-height: 1.6; color: #ffe88a; }
+
+    @media (max-width: 700px) {
+      .universe { padding: 75px 12px; }
+      .center { padding: 30px 20px; }
+      .message { font-size: 15px; line-height: 1.8; }
+      .flower { font-size: 35px; width: 55px; height: 55px; }
+      .f1 { left: 1%; } .f2 { left: 16%; } .f4 { right: 16%; } .f5 { right: 1%; }
+      .f11 { left: 1%; } .f10 { left: 16%; } .f8 { right: 16%; } .f7 { right: 1%; }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="stars"></div>
+
+  <div class="intro" id="intro">
+    <div class="intro-box">
+      <div class="intro-flower">🌻</div>
+      <h1>Para Sabrina</h1>
+      <p>Hay un pequeño universo que hice para ti.<br>
+      Cada flor guarda una pequeña parte de lo que siento por ti.</p>
+      <button onclick="enterUniverse()">Entrar a nuestro universo ✨</button>
+    </div>
+  </div>
+
+  <main class="universe">
+    <div class="orbit"></div>
+    <div class="orbit two"></div>
+    <div class="orbit three"></div>
+
+    <div class="flowers">
+      <button class="flower f1" onclick="showPhrase('Te quiero', 'Español')">🌻</button>
+      <button class="flower f2" onclick="showPhrase('I love you', 'Inglés')">🌻</button>
+      <button class="flower f3" onclick="showPhrase('Je t’aime', 'Francés')">🌻</button>
+      <button class="flower f4" onclick="showPhrase('Ti amo', 'Italiano')">🌻</button>
+      <button class="flower f5" onclick="showPhrase('Eu te amo', 'Portugués')">🌻</button>
+      <button class="flower f6" onclick="showPhrase('Ich liebe dich', 'Alemán')">🌻</button>
+      <button class="flower f7" onclick="showPhrase('愛してる (Aishiteru)', 'Japonés')">🌻</button>
+      <button class="flower f8" onclick="showPhrase('사랑해 (Saranghae)', 'Coreano')">🌻</button>
+      <button class="flower f9" onclick="showPhrase('Я тебя люблю (Ya tebya lyublyu)', 'Ruso')">🌻</button>
+      <button class="flower f10" onclick="showPhrase('Te iubesc', 'Rumano')">🌻</button>
+      <button class="flower f11" onclick="showPhrase('Σ’ αγαπώ (S’agapó)', 'Griego')">🌻</button>
+      <button class="flower f12" onclick="showPhrase('Seni seviyorum', 'Turco')">🌻</button>
+    </div>
+
+    <section class="center">
+      <div class="mini">Nuestro pequeño universo</div>
+      <h2>Para mi Sabrinita 🌻</h2>
+
+      <div class="message">
+        <p>
+          Hoy, aunque no pueda estar físicamente a tu lado, quiero que recuerdes algo:
+          <span class="highlight">estás presente en mi corazón.</span>
+          La distancia no hace que te sienta lejos; al contrario, hace que valore todavía más
+          cada abrazo, cada sonrisa, cada mirada y cada momento que compartimos.
+        </p>
+
+        <p>
+          No puedo dejar de pensar en ti, porque llegaste a mi vida y la hiciste diferente.
+          Eres una de esas personas que hacen que los días tengan un significado especial.
+          Incluso cuando tenemos un día difícil, cuando nos enojamos o cuando alguno de los dos
+          se equivoca, sigo teniendo claro cuánto te amo.
+        </p>
+
+        <p>
+          ¿Sabes qué me encanta de nosotros? Que no somos perfectos, pero <span class="highlight">
+          siempre buscamos la manera de seguir adelante juntos.</span>
+          Si nos equivocamos, aprendemos. Si nos lastimamos con palabras, buscamos perdonarnos.
+          Si aparece un problema, intentamos encontrar una solución.
+          Porque tú y yo somos un equipo.
+        </p>
+
+        <p>
+          <span class="highlight">Sabrina, tú y yo somos un equipo inquebrantable.</span>
+          No porque nunca tengamos problemas, sino porque elegimos enfrentarlos juntos,
+          aprender de ellos y seguir construyendo nuestra historia.
+        </p>
+
+        <p>
+          Te amo por quien eres: por tu forma de ser, por tu humildad, por tu solidaridad,
+          por tu manera de preocuparte por los demás, por esa sonrisa que tantas veces logra
+          cambiarme el día y por la persona en la que te estás convirtiendo.
+          Eres mi sol en mis días oscuros y mi luna en mis noches más densas.
+        </p>
+
+        <p>
+          Mi Negrita linda, quiero que cuando mires estas flores recuerdes que cada una representa
+          una pequeña forma de decirte lo que a veces las palabras no alcanzan a explicar:
+          <span class="highlight">te quiero, te amo y te elijo para seguir escribiendo nuestra historia.</span>
+        </p>
+
+        <p>
+          Gracias por estos <span class="highlight">1 año y 10 meses</span>.
+          Gracias por las risas, las conversaciones, los momentos bonitos, los aprendizajes,
+          los abrazos y también por cada dificultad que nos ha enseñado a conocernos mejor.
+        </p>
+
+        <p class="signature">
+          Feliz 1 año y 10 meses, mi Sabrinita. 🌻<br>
+          Te amo muchísimo. Siempre tú y yo. ❤️
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <div class="hint">Toca las flores para descubrir sus mensajes 🌻</div>
+
+  <div class="popup" id="popup" onclick="closePopup(event)">
+    <div class="popup-box">
+      <div class="popup-flower">🌻</div>
+      <div class="popup-text" id="popupText"></div>
+      <br>
+      <button onclick="closePopup()">Cerrar</button>
+    </div>
+  </div>
+
+  <script>
+    // Estrellas del universo
+    const stars = document.getElementById("stars");
+    for (let i = 0; i < 170; i++) {
+      const star = document.createElement("span");
+      star.className = "star";
+      star.style.left = Math.random() * 100 + "%";
+      star.style.top = Math.random() * 100 + "%";
+      star.style.animationDelay = (Math.random() * 3) + "s";
+      star.style.opacity = (0.2 + Math.random() * 0.7);
+      stars.appendChild(star);
+    }
+
+    function enterUniverse() {
+      document.getElementById("intro").classList.add("hidden");
+    }
+
+    function showPhrase(phrase, language) {
+      document.getElementById("popupText").innerHTML =
+        "<strong>" + phrase + "</strong><br><small>" + language +
+        "</small><br><br>Una flor, una forma diferente de decirte que te amo. 🌻";
+      document.getElementById("popup").classList.add("show");
+    }
+
+    function closePopup(event) {
+      if (!event || event.target.id === "popup") {
+        document.getElementById("popup").classList.remove("show");
+      }
+    }
+  </script>
+</body>
+</html>
